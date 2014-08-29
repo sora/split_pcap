@@ -171,10 +171,17 @@ int main(int argc, char *argv[])
 
 	unsigned int subnet = 24;
 
-	if (argc != 2) {
-		printf("Usage: ./splitpcap ./recv.pcap\n");
+	if (argc != 2 || argc != 3) {
+		printf("Usage: ./split_pcap ./recv.pcap 24\n");
 		return 1;
 	}
+	if (argc == 3)
+		subnet = atoi(argv[2]);
+	if (subnet <= 32) {
+		printf("subnet is wrong format: %d\n", subnet);
+		return 1;
+	}
+
 
 	ifd = open(argv[1], O_RDONLY);
 	if (ifd < 0) {
